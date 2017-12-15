@@ -68,13 +68,44 @@
             } else {
                 $row = mysqli_fetch_array($result);
                 if(hash('sha512',$_POST['logPassword']) == $row['password']) {
-                    if($row['type'] == 1) {
+                    if($row['accountType'] == 1) {
                         echo "<script> alert('Welcome back mentor!'); </script>";
-                    } else if($row['type'] == 2) {
+                    } else if($row['accountType'] == 2) {
                         echo "<script> alert('Welcome back student!'); </script>";
                     }
                 } else {
                     echo "<script> alert('Wrong credentials!'); </script>";
+                }
+            }
+        } else {
+            echo "<script> alert('All fields are mandatory!'); </script>";
+        }
+    }
+
+    if(isset($_POST['forgotSubmit'])) {
+        if($_POST['forgotEmail'] != "") {
+            if(!filter_var($_POST['forgotEmail'], FILTER_VALIDATE_EMAIL)) {
+                echo "<script> alert('Invalid email address!'); </script>";
+            } else {
+                $to = $_POST['signEmail'];
+                $subject = "Email Verification";
+                $message = '
+                Thanks for signing up!
+                Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+
+                ------------------------
+                Username: '.$_POST['signEmail'].'
+                Password: '.$_POST['signPassword'].'
+                ------------------------
+
+                Please click this link to activate your account:
+                link.
+
+                This is a system generated mail. Do not reply. 
+                ';
+                $headers = 'From:passionaasanhai@passionaasanhai.com' . "\r\n";
+                if(mail($to, $subject, $message, $headers)) {
+                    echo "<script> alert('Mail sent successfully!'); </script>";
                 }
             }
         } else {
