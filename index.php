@@ -1,12 +1,12 @@
 <?php
 
-    /*$link = mysqli_connect("localhost","passiona_dev","password98@","passiona_web");
+    $link = mysqli_connect("localhost","root","password@","interconnect");
 
     $error = 0;
     $errorMessage = "";
 
     if(isset($_POST['signSubmit'])) {
-        if($_POST['signName'] != "" && $_POST['signEmail'] != "" && $_POST['signPassword'] != "" && $_POST['signConfirmPassword'] != "" && ($_POST['accountType'] == 1 || $_POST['accountType'] == 2)) {
+        if($_POST['signName'] != "" && $_POST['signEmail'] != "" && $_POST['signPassword'] != "" && $_POST['signConfirmPassword'] != "" && ($_POST['accountType'] == 1 || $_POST['accountType'] == 2) && $_POST['acceptTerms'] == 1) {
             if(!filter_var($_POST['signEmail'], FILTER_VALIDATE_EMAIL)) {
                 $error += 1;
                 $errorMessage .= "Invalid email address!";
@@ -27,10 +27,10 @@
             if($error > 0) {
                 echo "<script> alert('".$errorMessage."'); </script>";
             } else {
-                $query = "INSERT INTO `users`(`name`, `email`, `password`, `type`) VALUES('".mysqli_real_escape_string($link, $_POST['signName'])."', '".mysqli_real_escape_string($link, $_POST['signEmail'])."', '".mysqli_real_escape_string($link, hash('sha512', $_POST['signPassword']))."', '".mysqli_real_escape_string($link, $_POST['accountType'])."')";
+                $query = "INSERT INTO `users`(`name`, `email`, `password`, `accountType`) VALUES('".mysqli_real_escape_string($link, $_POST['signName'])."', '".mysqli_real_escape_string($link, $_POST['signEmail'])."', '".mysqli_real_escape_string($link, hash('sha512', $_POST['signPassword']))."', '".mysqli_real_escape_string($link, $_POST['accountType'])."')";
                 if(mysqli_query($link, $query)) {
                     echo "<script> alert('Signed up successfully! Verify your email address!'); </script>";
-                    $to = $_POST['signEmail'];
+                    /*$to = $_POST['signEmail'];
                     $subject = "Email Verification";
                     $message = '
                     Thanks for signing up!
@@ -49,7 +49,7 @@
                     $headers = 'From:passionaasanhai@passionaasanhai.com' . "\r\n";
                     if(mail($to, $subject, $message, $headers)) {
                         echo "hello";
-                    } 
+                    } */
                 } 
             }
         } else {
@@ -80,7 +80,7 @@
         } else {
             echo "<script> alert('All fields are mandatory!'); </script>";
         }
-    }*/
+    }
 
 ?>
 
@@ -213,7 +213,7 @@
                         You are a: &nbsp;&nbsp;
                         <input type="radio" id="mentor" name="accountType" value="1"><button type="button" class='radioText' value="1">Mentor</button>
                         <input type="radio" id="student" name="accountType" value="2"><button type="button" class='radioText' value="2">Student</button><br>
-                        <input type="checkbox" id="acceptTerms">&nbsp;<button type="button" id="acceptButton">I accept terms and conditions.</button><br><br>
+                        <input type="checkbox" id="acceptTerms" value="1" name="acceptTerms">&nbsp;<button type="button" id="acceptButton">I accept terms and conditions.</button><br><br>
                         <button class="btn btn-primary" name="signSubmit">SUBMIT</button>
                     </form>
                 </div>
