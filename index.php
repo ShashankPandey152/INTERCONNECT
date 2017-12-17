@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     $link = mysqli_connect("localhost","root","password@","interconnect");
 
     $error = 0;
@@ -50,6 +52,12 @@
                     if(mail($to, $subject, $message, $headers)) {
                         echo "hello";
                     } */
+                    echo "<script> location.href='select.php'; </script>";
+                    $query = "SELECT `id` FROM `users` WHERE email = '".mysqli_real_escape_string($link, $_POST['signEmail'])."'";
+                    $row = mysqli_fetch_array(mysqli_query($link, $query));
+                    $_SESSION['id'] = $row['id'];
+                    $_SESSION['name'] = $_POST['signName'];
+                    $_SESSION['email'] = $_POST['signEmail'];
                 } 
             }
         } else {

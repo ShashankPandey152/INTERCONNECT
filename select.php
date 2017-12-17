@@ -1,3 +1,11 @@
+<?php
+
+    $link = mysqli_connect("localhost","root","password@","interconnect");
+
+    
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
