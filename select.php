@@ -2,7 +2,9 @@
 
     $link = mysqli_connect("localhost","root","password@","interconnect");
 
-    
+    if(isset($_POST['selectSubmit'])) {
+        echo "<script> alert('".$_POST['selectSubmit']."'); </script>";
+    }
 
 ?>
 
@@ -92,7 +94,9 @@
             <div class="circular"><p class="interestTopic">ARTS</p><img class="adj" id="9" src="images/9.jpg"></div>
             <br><br>
             <p id="numberInterests">SELECTED INTERESTS: 0</p>
-            <button class="btn btn-primary" name="selectSubmit" style="margin-bottom: 10px;">SUBMIT</button>
+            <form method="post">
+                <button class="btn btn-primary" name="selectSubmit" style="margin-bottom: 10px;" id="selectSubmit" value="">SUBMIT</button>
+            </form>
         </div>
         
         <script type="text/javascript">
@@ -101,7 +105,7 @@
             var oneImage = $("#1").attr("src"), twoImage = $("#2").attr("src"), threeImage = $("#3").attr("src");
             var fourImage = $("#4").attr("src"), fiveImage = $("#5").attr("src"), sixImage = $("#6").attr("src");
             var sevenImage = $("#7").attr("src"), eightImage = $("#8").attr("src"), nineImage = $("#9").attr("src");
-            var checked = 0;
+            var checked = 0, interests = [];
             $("#1").click(function() {
                if(oneClicked) {
                    $("#1").attr("src","images/tick.png");

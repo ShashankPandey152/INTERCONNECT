@@ -127,7 +127,7 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width">
-        <title>PASSION AASAN HAI</title>
+        <title>INTERCONNECT</title>
         
         <!--jQuery-->
         <script type="text/javascript" src="js/jquery.min.js"></script>
