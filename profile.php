@@ -57,11 +57,13 @@
                 Interests:
             </div>
             
-            <div id="upload">
-                <h5>Uploads</h5>
-            </div>
         
         </div>
+        
+        <div id="upload">
+            <hr id="hrUpload">
+                <h5>Uploads</h5>
+            </div>
         
         <button id="showChat"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></button>
         

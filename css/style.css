@@ -107,6 +107,7 @@
 .card {
     width: 18rem;
     float: left;
+    z-index: -1;
 }
 #details {
     float: left;
@@ -117,6 +118,9 @@
     text-align: center;
     margin-top: 320px;
     margin-left: -350px;
+}
+#hrUpload {
+    width: 1045px;
 }
 
 @media screen and (max-width: 480px) {
@@ -130,5 +134,8 @@
     #upload {
         margin-top: 80px;
         margin-left: 0px;
+    }
+    #hrUpload {
+        width: 100px;
     }
 }
