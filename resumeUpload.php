@@ -7,7 +7,7 @@
         <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/jquery.min.js"></script>
 
-        <title>resume upload</title>
+        <title>UPLOAD RESUME</title>
         <style type="text/css">
 
             .navbar-custom {

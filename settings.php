@@ -27,6 +27,7 @@
                 width: 70%; 
                 margin-left: 135px; 
                 float: left;
+                z-index: -1;
             }
             
             .inputSettings {
@@ -90,7 +91,7 @@
         <div>
           <h2 style="text-align: center;">SETTINGS</h2>
           <div id="accordion">
-              <h3>Privacy Settings</h3>
+              <h3 class="idAccordion">Privacy Settings</h3>
               <div>
                 <p>
                     Who can see your post(s): 
@@ -103,14 +104,14 @@
                     </select>
                 </p>
               </div>
-              <h3>Security Settings</h3>
+              <h3 class="idAccordion">Security Settings</h3>
               <div>
                 <p><input type="password" class="inputSettings" placeholder="Old Password"></p>
                 <p><input type="password" class="inputSettings" placeholder="New Password"></p>
                 <p><input type="password" class="inputSettings" placeholder="Confirm New Password"></p>
                 <p><input type="submit" id="changePassword" value="Change Password"></p>
               </div>
-              <h3>General Settings</h3>
+              <h3 class="idAccordion">General Settings</h3>
               <div>
                 <p><input type="text" class="inputSettings" placeholder="Name"></p>
                 <p>Select Interest(s):</p>
