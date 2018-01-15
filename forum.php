@@ -16,10 +16,18 @@
         <!--Stylesheet-->
         <link rel="stylesheet" type="text/css" href="css/style.css">
         
-        <title>STARTER TEMPLATE</title>
+        <title>FORUM</title>
         <style type="text/css">
 
-           
+            #question {
+                margin-left: 100px;
+            }
+            
+            .inputSettings {
+                border: 2px solid #19D1FF;
+                border-radius: 10px;
+                padding: 5px 10px;
+            }
             
         </style>
     </head>
@@ -40,7 +48,11 @@
         </div>
 
         <div>
-          <h2 style="text-align: center;">HEADING</h2>
+          <h2 style="text-align: center;">FORUM</h2>
+          <div style="float: left;" id="question">
+              <p><input type="text" placeholder="Question">
+              <input type="button" value="Ask a new question"></p> 
+          </div>
         </div>
         
         <button id="showChat"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></button>
