@@ -104,9 +104,31 @@
     background: none;
     border: none;
 }
+.card {
+    width: 18rem;
+    float: left;
+}
+#details {
+    float: left;
+    margin-left: 20px;
+}
+#upload {
+    float: left;
+    text-align: center;
+    margin-top: 320px;
+    margin-left: -350px;
+}
 
 @media screen and (max-width: 480px) {
     #activeUsers {
         display: none;
+    }
+    .card {
+        width: 15rem;
+        z-index: -1;
+    }
+    #upload {
+        margin-top: 80px;
+        margin-left: 0px;
     }
 }

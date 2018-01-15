@@ -43,9 +43,23 @@
           <h2 style="text-align: center;">MY PROFILE</h2>
         </div>
         
-        <div id="mainProfile">
+        <div id="mainProfile" style="margin-left: 80px;">
         
+            <div class="card">
+              <img class="card-img-top" src="images/blank.jpeg" alt="MY DP">
+              <div class="card-body">
+                <h5 class="card-title" style="text-align: center;">NAME</h5>
+              </div>
+            </div>
+
+            <div id="details">
+                Email: <br><br>
+                Interests:
+            </div>
             
+            <div id="upload">
+                <h5>Uploads</h5>
+            </div>
         
         </div>
         

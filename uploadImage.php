@@ -50,7 +50,7 @@
         </nav>
         <div style="text-align: center;">
             <br><br><br><br>
-            <img  src="http://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg">
+            <img  src="images/blank.jpeg">
             <br><br>
             <h3>Upload an Image</h3>
             <input type="file" accept="image/*" autocomplete=off><br><br>
