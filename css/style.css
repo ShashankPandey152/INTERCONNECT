@@ -138,4 +138,7 @@
     #hrUpload {
         width: 335px;
     }
+    .credentials {
+        width: 80%;
+    }
 }

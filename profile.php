@@ -1,7 +1,25 @@
+<?php
+
+    session_start();
+
+    $link = mysqli_connect("shareddb-g.hosting.stackcp.net", "interconnect-3237e9c9", "password98@", "interconnect-3237e9c9");
+    
+    if(isset($_POST['logout'])) {
+        $_SESSION['id'] = "";
+        $_SESSION['name'] = "";
+        echo "<script> location.href='/'; </script>";
+    }
+
+    //Fetching details
+    $query = "SELECT * FROM `users` WHERE `id` = '".mysqli_real_escape_string($link, $_SESSION['id'])."'";
+    $row = mysqli_fetch_array(mysqli_query($link, $query));
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <!--Bootstrap-->
         <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
@@ -16,10 +34,25 @@
         <!--Stylesheet-->
         <link rel="stylesheet" type="text/css" href="css/style.css">
         
-        <title>profilepage</title>
+        <title>PROFILE</title>
         <style type="text/css">
 
-           
+            #logout {
+                color: white;
+                background: none;
+                border: none;
+                font-weight: bold;
+            }
+            
+            #upload {
+                margin-left: -500px;
+            }
+            
+            @media screen and (max-width: 480px) {
+                #upload {
+                    margin-left: 10px;
+                }
+            }
             
         </style>
     </head>
@@ -27,6 +60,9 @@
 
         <nav class="navbar navbar-toggleable-md navbar-inverse navbar-custom">
           <a class="navbar-brand" href="#">INTERCONNECT</a>
+          <form method="post">
+            <button id="logout" name="logout">LOGOUT</button>
+          </form>
         </nav>
 
         <div id="mySidenav" class="sidenav">
@@ -46,15 +82,32 @@
         <div id="mainProfile" style="margin-left: 80px;">
         
             <div class="card">
-              <img class="card-img-top" src="images/blank.jpeg" alt="MY DP">
+              <img class="card-img-top" src="<?php if($row['dp'] == "") { echo "images/blank.jpeg"; } else { echo "images/dp/".$row['dp']; } ?>" alt="MY DP">
               <div class="card-body">
-                <h5 class="card-title" style="text-align: center;">NAME</h5>
+                <h5 class="card-title" style="text-align: center;"><?php echo $row['name']; ?></h5>
               </div>
             </div>
 
             <div id="details">
-                Email: <br><br>
-                Interests:
+                Email: <?php echo $_SESSION['email']; ?><br><br>
+                Interests: 
+                <?php
+                    $interests = Array();
+                    $rem;
+                    $len = 0;
+                    $num = $row['interests'];
+                    while($num != 0) {
+                        $rem = $num % 10;
+                        array_push($interests, $rem);
+                        $len++;
+                        $num = intval($num/10);
+                    }
+                    $interest = Array("ACTING","DANCING","SINGING","CODING","WRITING","SPORTS","PHOTOGRAPHY","COOKING","ARTS");
+                    echo "<br>";
+                    for($i = 0;$i<$len;$i++) {
+                        echo $interest[$i]."&nbsp;&nbsp;";
+                    }
+                ?>
             </div>
             
         
@@ -67,7 +120,7 @@
         
         <button id="showChat"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></button>
         
-        <div id="activeUsers">
+        <div id="activeUsers" style="margin-top: -50px;">
             <button id="hideChat"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></button>Active Users
             <hr>
             <p>

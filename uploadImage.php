@@ -1,3 +1,15 @@
+<?php
+
+    session_start();
+
+    if(isset($_POST['logout'])) {
+        $_SESSION['id'] = "";
+        $_SESSION['name'] = "";
+        echo "<script> location.href='/'; </script>";
+    }
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,6 +52,12 @@
                 font-weight: bold; 
                 border-radius: 10px;
             }
+            #logout {
+                color: white;
+                font-weight: bold;
+                background: none;
+                border: none;
+            }
             
         </style>
     </head>
@@ -47,6 +65,9 @@
 
         <nav class="navbar navbar-toggleable-md navbar-inverse navbar-custom">
           <a class="navbar-brand" href="#">INTERCONNECT</a>
+          <form method="post">
+            <button id="logout" name="logout">LOGOUT</button>
+          </form>
         </nav>
         <div style="text-align: center;">
             <br><br><br><br>

@@ -2,122 +2,129 @@
 
     session_start();
 
-    $link = mysqli_connect("localhost","root","password@","interconnect");
+    $link = mysqli_connect("shareddb-g.hosting.stackcp.net", "interconnect-3237e9c9", "password98@", "interconnect-3237e9c9");
 
-    $error = 0;
-    $errorMessage = "";
-
-    if(isset($_POST['signSubmit'])) {
-        if($_POST['signName'] != "" && $_POST['signEmail'] != "" && $_POST['signPassword'] != "" && $_POST['signConfirmPassword'] != "" && ($_POST['accountType'] == 1 || $_POST['accountType'] == 2) && $_POST['acceptTerms'] == 1) {
-            if(!filter_var($_POST['signEmail'], FILTER_VALIDATE_EMAIL)) {
-                $error += 1;
-                $errorMessage .= "Invalid email address!";
-            } 
-            
-            $query = "SELECT `id` FROM `users` WHERE `email` = '".mysqli_real_escape_string($link, $_POST['signEmail'])."'";
-            
-            if(mysqli_num_rows(mysqli_query($link, $query))) {
-                $error += 1;
-                $errorMessage .= "\\nAccount already exists!";
-            }
-            
-            if($_POST['signPassword'] != $_POST['signConfirmPassword']) {
-                $error += 1;
-                $errorMessage .= "\\nPasswords do not match!";
-            }
-            
-            if($error > 0) {
-                echo "<script> alert('".$errorMessage."'); </script>";
-            } else {
-                $query = "INSERT INTO `users`(`name`, `email`, `password`, `accountType`) VALUES('".mysqli_real_escape_string($link, $_POST['signName'])."', '".mysqli_real_escape_string($link, $_POST['signEmail'])."', '".mysqli_real_escape_string($link, hash('sha512', $_POST['signPassword']))."', '".mysqli_real_escape_string($link, $_POST['accountType'])."')";
-                if(mysqli_query($link, $query)) {
-                    echo "<script> alert('Signed up successfully! Verify your email address!'); </script>";
-                    /*$to = $_POST['signEmail'];
-                    $subject = "Email Verification";
-                    $message = '
-                    Thanks for signing up!
-                    Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
-
-                    ------------------------
-                    Username: '.$_POST['signEmail'].'
-                    Password: '.$_POST['signPassword'].'
-                    ------------------------
-
-                    Please click this link to activate your account:
-                    link.
-
-                    This is a system generated mail. Do not reply. 
-                    ';
-                    $headers = 'From:passionaasanhai@passionaasanhai.com' . "\r\n";
-                    if(mail($to, $subject, $message, $headers)) {
-                        echo "hello";
-                    } */
-                    echo "<script> location.href='select.php'; </script>";
-                    $query = "SELECT `id` FROM `users` WHERE email = '".mysqli_real_escape_string($link, $_POST['signEmail'])."'";
-                    $row = mysqli_fetch_array(mysqli_query($link, $query));
-                    $_SESSION['id'] = $row['id'];
-                    $_SESSION['name'] = $_POST['signName'];
-                    $_SESSION['email'] = $_POST['signEmail'];
-                } 
-            }
-        } else {
-            echo "<script> alert('All fields are mandatory!'); </script>";
-        }
-    }
-
+    //Login
     if(isset($_POST['logSubmit'])) {
         if($_POST['logEmail'] != "" && $_POST['logPassword'] != "") {
-            $query = "SELECT * FROM `users` WHERE `email` = '".mysqli_real_escape_string($link, $_POST['logEmail'])."'";
-            $result = mysqli_query($link, $query);
             if(!filter_var($_POST['logEmail'], FILTER_VALIDATE_EMAIL)) {
                 echo "<script> alert('Invalid email address!'); </script>";
-            } else if(mysqli_num_rows($result) == 0) {
-                echo "<script> alert('Account does not exist!'); </script>";
             } else {
-                $row = mysqli_fetch_array($result);
-                if(hash('sha512',$_POST['logPassword']) == $row['password']) {
-                    if($row['accountType'] == 1) {
-                        echo "<script> alert('Welcome back mentor!'); </script>";
-                    } else if($row['accountType'] == 2) {
-                        echo "<script> alert('Welcome back student!'); </script>";
-                    }
+                $query = "SELECT * FROM `users` WHERE `email` = '".mysqli_real_escape_string($link, $_POST['logEmail'])."'";
+                $result = mysqli_query($link, $query);
+                if(mysqli_num_rows($result) == 0) {
+                    echo "<script> alert('Account does not exist. Sign up first!'); </script>";
                 } else {
-                    echo "<script> alert('Wrong credentials!'); </script>";
+                    $row = mysqli_fetch_array($result);
+                    if($_POST['logPassword'] == $row['password']) {
+                        $name = $row['name'];
+                        echo "<script> alert('Logged in successfully. Welcome back $name'); </script>";
+                        $_SESSION['id'] = $row['id'];
+                        $_SESSION['email'] = $row['email'];
+                        /*if($row['status'] == 0) {
+                            echo "<script> location.href = 'emailVerify'; </script>";
+                        } else if($row['interests'] == 0) {
+                            echo "<script> location.href = 'select'; </script>";
+                        } else if($row['dp'] == "") {
+                            echo "<script> location.href = 'uploadImage'; </script>";
+                        } */
+                        echo "<script> location.href = 'profile'; </script>";
+                    } else {
+                        echo "<script> alert('Incorrect credentials!'); </script>";
+                    }
                 }
             }
         } else {
-            echo "<script> alert('All fields are mandatory!'); </script>";
+            echo "<script> alert('Complete the form!'); </script>";
         }
     }
 
+    //Signup 
+    if(isset($_POST['signSubmit'])) {
+        if($_POST['signName'] != "" && $_POST['signEmail'] != "" && $_POST['signPassword'] != "" && $_POST['signConfirmPassword'] != "" && $_POST['accountType'] != "" && $_POST['acceptTerms'] == 1) {
+            $errors = 0;
+            $errorMsg = "";
+            if(!filter_var($_POST['signEmail'], FILTER_VALIDATE_EMAIL)) {
+                $errors++;
+                $errorMsg .= "\\nInvalid email address!";
+            }
+            if($_POST['signPassword'] != $_POST['signConfirmPassword']) {
+                $errors++;
+                $errorMsg .= "\\nPasswords do not match!";
+            }
+            $query = "SELECT `id` FROM `users` WHERE `email` = '".mysqli_real_escape_string($link, $_POST['signEmail'])."'";
+            $result = mysqli_query($link, $query);
+            if(mysqli_num_rows($result) > 0) {
+                $errors++;
+                $errorMsg .= "\\nAccount exists already!";
+            }
+            if($errors > 0) {
+                echo "<script> alert('$errorMsg'); </script>";
+            } else {
+                $query = "INSERT INTO `users`(`name`, `email`, `password`, `type`) VALUES('".mysqli_real_escape_string($link, $_POST['signName'])."', '".mysqli_real_escape_string($link, $_POST['signEmail'])."', '".mysqli_real_escape_string($link, $_POST['signPassword'])."', '".mysqli_real_escape_string($link, $_POST['accountType'])."')";
+                if(mysqli_query($link, $query)) {
+                    echo "<script> alert('Account created successfully!'); </script>";
+                    $to = $_POST['signEmail'];
+                    $subject = "Email Verification";
+                    $message = '
+Thanks for signing up!
+Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+
+------------------------
+Username: '.$_POST['signEmail'].'
+Password: '.$_POST['signPassword'].'
+------------------------
+
+Please click this link to activate your account:
+http://siddhartha-com.stackstaging.com/verify.php?email='.$mail.'
+
+This is a system generated mail. Do not reply. 
+                    ';
+                    $headers = 'From:no-reply@interconnect.com' . "\r\n"; 
+                    if(mail($to, $subject, $message, $headers)) {
+                        echo "<script> alert('Verification mail sent. Please verify your email address!'); </script>";
+                    } else {
+                        echo "<script> alert('Oops there was some error, please come back after some time!'); </script>";
+                    }
+                } else {
+                    echo "<script> alert('There was a problem in signing you up, please come back later!'); </script>";
+                }
+            }
+            
+        } else {
+            echo "<script> alert('Complete the form!'); </script>";
+        }
+    }
+
+    //Forgot Password
     if(isset($_POST['forgotSubmit'])) {
         if($_POST['forgotEmail'] != "") {
             if(!filter_var($_POST['forgotEmail'], FILTER_VALIDATE_EMAIL)) {
                 echo "<script> alert('Invalid email address!'); </script>";
             } else {
-                $to = $_POST['signEmail'];
-                $subject = "Email Verification";
-                $message = '
-                Thanks for signing up!
-                Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+                $query = "SELECT `id` FROM `users` WHERE `email` = '".mysqli_real_escape_string($link, $_POST['forgotEmail'])."'";
+                if(mysqli_num_rows(mysqli_query($link, $query)) == 0) {
+                    echo "<script> alert('This email is not linked with an account, sign up first!'); </script>";
+                } else {
+                    $to = $_POST['forgotEmail'];
+                    $subject = "Forgot password";
+                    $message = '
 
-                ------------------------
-                Username: '.$_POST['signEmail'].'
-                Password: '.$_POST['signPassword'].'
-                ------------------------
+Please click this link to change your password:
+http://siddhartha-com.stackstaging.com/verify.php?email='.$mail.'
 
-                Please click this link to activate your account:
-                link.
-
-                This is a system generated mail. Do not reply. 
-                ';
-                $headers = 'From:passionaasanhai@passionaasanhai.com' . "\r\n";
-                if(mail($to, $subject, $message, $headers)) {
-                    echo "<script> alert('Mail sent successfully!'); </script>";
+This is a system generated mail. Do not reply. 
+                    ';
+                    $headers = 'From:no-reply@interconnect.com' . "\r\n"; 
+                    if(mail($to, $subject, $message, $headers)) {
+                        echo "<script> alert('Password reset mail sent, please check your inbox!'); </script>";
+                    } else {
+                        echo "<script> alert('Oops there was some error, please come back after some time!'); </script>";
+                    }
                 }
             }
         } else {
-            echo "<script> alert('All fields are mandatory!'); </script>";
+            echo "<script> alert('Enter email address first!'); </script>";
         }
     }
 
@@ -126,7 +133,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>INTERCONNECT</title>
         
         <!--jQuery-->
@@ -139,6 +146,9 @@
         <!--Bootstrap-->
         <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
         <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+        
+        <!--Stylesheets-->
+        <link rel="stylesheet" type="text/css" href="css/style.css">
               
         <style type="text/css">
         
@@ -217,7 +227,7 @@
             @media screen and(max-width: 480px) {
                 
                 .credentials {
-                    width: 80%;
+                    background: red;
                 }
                 
             }

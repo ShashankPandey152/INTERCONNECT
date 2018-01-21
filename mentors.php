@@ -16,33 +16,10 @@
         <!--Stylesheet-->
         <link rel="stylesheet" type="text/css" href="css/style.css">
         
-        <title>NAME</title>
+        <title>MENTORS</title>
         <style type="text/css">
 
-            #otherButton {
-                float: left;
-                margin-top: 300px;
-                margin-left: -350px;
-            }
-            
-            .buttons {
-                background: white;
-                color: #19D1FF;
-                border-radius: 10px;
-                padding: 5px 10px;
-                border: none;
-                text-transform: uppercase;
-                border: 2px solid #19D1FF;
-                margin-left: 10px;
-                font-weight: bold;
-            }
-            
-            .buttons:hover {
-                background: #19D1FF;
-                color: white;
-            }
-            
-            #logout {
+           #logout {
                 color: white;
                 background: none;
                 border: none;
@@ -69,30 +46,7 @@
         </div>
 
         <div>
-          <h2 style="text-align: center;">PROFILE</h2>
-        </div>
-        
-        <div id="mainProfile" style="margin-left: 80px;">
-        
-            <div class="card">
-              <img class="card-img-top" src="images/blank.jpeg" alt="MY DP">
-              <div class="card-body">
-                <h5 class="card-title" style="text-align: center;">NAME</h5>
-              </div>
-            </div>
-
-            <div id="details">
-                Email: <br><br>
-                Interests:
-            </div>
-        
-        </div>
-        
-        <div id="upload">
-            <button class="buttons">Add Friend</button>
-            <button class="buttons">Block</button>
-            <hr id="hrUpload">
-            <h5>Uploads</h5>
+          <h2 style="text-align: center;">MENTORS LIST</h2>
         </div>
         
         <button id="showChat"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></button>

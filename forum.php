@@ -27,6 +27,28 @@
                 border: 2px solid #19D1FF;
                 border-radius: 10px;
                 padding: 5px 10px;
+                margin-bottom: 10px;
+            }
+            
+            .askQuestion {
+                padding: 5px 10px;
+                background: white;
+                color: #19D1FF;
+                border: 2px solid #19D1FF;
+                border-radius: 10px;
+                font-weight: bold;
+            }
+            
+            .askQuestion:hover {
+                background: #19D1FF;
+                color: white;
+            }
+            
+            #logout {
+                color: white;
+                background: none;
+                border: none;
+                font-weight: bold;
             }
             
         </style>
@@ -35,6 +57,7 @@
 
         <nav class="navbar navbar-toggleable-md navbar-inverse navbar-custom">
           <a class="navbar-brand" href="#">INTERCONNECT</a>
+          <button id="logout">LOGOUT</button>
         </nav>
 
         <div id="mySidenav" class="sidenav">
@@ -49,9 +72,9 @@
 
         <div>
           <h2 style="text-align: center;">FORUM</h2>
-          <div style="float: left;" id="question">
-              <p><input type="text" placeholder="Question">
-              <input type="button" value="Ask a new question"></p> 
+          <div style="float: left; text-align: center;" id="question">
+              <p><input type="text" class="inputSettings" placeholder="Question">
+              <input type="button" class="askQuestion" value="Ask a new question"></p> 
           </div>
         </div>
         

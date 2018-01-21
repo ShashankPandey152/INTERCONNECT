@@ -50,6 +50,13 @@
                 color: white;
             }
             
+            #logout {
+                color: white;
+                background: none;
+                border: none;
+                font-weight: bold;
+            }
+            
             @media screen and (max-width: 480px) {
                 #accordion {
                     margin-left: 80px;
@@ -76,6 +83,7 @@
 
         <nav class="navbar navbar-toggleable-md navbar-inverse navbar-custom">
           <a class="navbar-brand" href="#">INTERCONNECT</a>
+          <button id="logout">LOGOUT</button>
         </nav>
 
         <div id="mySidenav" class="sidenav">

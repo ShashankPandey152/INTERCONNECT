@@ -19,7 +19,12 @@
         <title>STARTER TEMPLATE</title>
         <style type="text/css">
 
-           
+           #logout {
+                color: white;
+                background: none;
+                border: none;
+                font-weight: bold;
+            }
             
         </style>
     </head>
@@ -27,6 +32,7 @@
 
         <nav class="navbar navbar-toggleable-md navbar-inverse navbar-custom">
           <a class="navbar-brand" href="#">INTERCONNECT</a>
+            <button id="logout">LOGOUT</button>
         </nav>
 
         <div id="mySidenav" class="sidenav">
