@@ -112,6 +112,7 @@
 #details {
     float: left;
     margin-left: 20px;
+    text-align: center;
 }
 #upload {
     float: left;
